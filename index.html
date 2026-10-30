@@ -112,7 +112,15 @@ html[lang=zh] #lessonText,html[lang=zh] #presentationCopy{line-height:1.7}
 body[data-startup] > :not(#startupScreen):not(script):not(style){visibility:hidden!important;pointer-events:none!important}
 #startupScreen{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;background:#091321;color:#f0f5fc;font:16px/1.6 system-ui,sans-serif;padding:24px;box-sizing:border-box}
 #startupScreen .startupCard{width:min(430px,100%);text-align:center}#startupScreen small{color:#9ec5d9;letter-spacing:.13em}#startupScreen h1{font-size:clamp(24px,5vw,34px);line-height:1.2;margin:18px 0}#startupScreen p{color:#bacbdb}#startupScreen progress{width:100%;height:8px;accent-color:#54cabb;border:0}#startupScreen button{border:1px solid #5c869c;border-radius:24px;background:#173044;color:white;padding:12px 22px;cursor:pointer}#startupScreen [hidden]{display:none!important}
-</style></head><body data-startup aria-busy="true"><div id="startupScreen" role="status" aria-live="polite"><div class="startupCard"><small>İPOSB PANCAR MTAL</small><h1>İnsan Anatomisi</h1><p>Muhammed Mustafa SEYHAN<br>ve İlyas BİRİCİK</p><progress id="startupProgress" max="10" value="0" aria-label="Anatomi yükleniyor"></progress><p id="startupStatus">3D sahne hazırlanıyor…</p><button id="startupRetry" hidden onclick="location.reload()">Yeniden dene</button><noscript>Bu 3D proje için tarayıcınızda JavaScript açık olmalıdır.</noscript></div></div><script>
+</style><script>
+/* Cache previously downloaded, versioned 3D models in this browser. */
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', {scope: './'})
+      .catch(err => console.warn('3D model önbelleği başlatılamadı:', err));
+  });
+}
+</script></head><body data-startup aria-busy="true"><div id="startupScreen" role="status" aria-live="polite"><div class="startupCard"><small>İPOSB PANCAR MTAL</small><h1>İnsan Anatomisi</h1><p>Muhammed Mustafa SEYHAN<br>ve İlyas BİRİCİK</p><progress id="startupProgress" max="10" value="0" aria-label="Anatomi yükleniyor"></progress><p id="startupStatus">3D sahne hazırlanıyor…</p><button id="startupRetry" hidden onclick="location.reload()">Yeniden dene</button><noscript>Bu 3D proje için tarayıcınızda JavaScript açık olmalıdır.</noscript></div></div><script>
 window.atlasStartupError=function(message){if(!document.body.hasAttribute('data-startup'))return;window.atlasBootFailed=true;document.getElementById('startupStatus').textContent=message;document.getElementById('startupRetry').hidden=false;};
 addEventListener('error',function(e){if(e.target&&e.target.tagName==='SCRIPT'||e.message)window.atlasStartupError('3D sahne başlatılamadı. Bağlantınızı ve tarayıcınızın donanım hızlandırma ayarını kontrol ederek yeniden deneyin.');},true);
 setTimeout(function(){if(document.body.hasAttribute('data-startup')){if(!window.atlasBootFailed)document.getElementById('startupStatus').textContent='İlk yükleme bağlantı hızınıza göre biraz sürebilir. Modeller hazırlanıyor…';document.getElementById('startupRetry').hidden=false;}},30000);
